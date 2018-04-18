@@ -1,0 +1,17 @@
+/*
+This file is part of the McThrows package.
+
+(c) 2018 Daniele Ambrosino <mail@danieleambrosino.it>
+
+For the full copyright and license information, please view the LICENSE
+file distributed with this source code.
+*/
+/* 
+    Created on : 10-apr-2018, 18.40.43
+    Author     : Daniele Ambrosino <mail@danieleambrosino.it>
+*/
+
+body {
+  background-image: url("../../assets/img/backgrounds/light-wood-texture.jpg");
+  user-select: none;
+}
