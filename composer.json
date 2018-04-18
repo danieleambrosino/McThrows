@@ -1,0 +1,29 @@
+{
+  "name": "danieleambrosino/tiri-matti",
+  "type": "project",
+  "require": {
+    "twbs/bootstrap": "^4.1",
+    "components/jquery": "^3.3",
+    "ext-sqlite3": "^7.0",
+    "php": "^7.0"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Daniele Ambrosino",
+      "email": "mail@danieleambrosino.it"
+    }
+  ],
+  "autoload": {
+    "classmap": [
+      "site/models/",
+      "bot/subjects/",
+      "bot/observers/",
+      "utils/"
+    ],
+    "files": [
+      "utils/defines.php"
+    ]
+  },
+  "minimum-stability": "dev"
+}
