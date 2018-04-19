@@ -262,6 +262,18 @@ class UserDaoSQLite implements UserDao
     return FALSE;
   }
   
+  public function deletePendingDieType()
+  {
+    $query = "UPDATE insertions\n"
+        . "SET die_id = NULL\n"
+        . "WHERE id = (SELECT insertion_id\n"
+        .             "FROM last_pending_insertion\n"
+        .             "JOIN users ON last_pending_insertion.user_id = users.id\n"
+        .             "WHERE users.telegram_id = ?)";
+    $values = [$this->telegramId];
+    return $this->bindAndExecute($query, $values) !== FALSE;
+  }
+  
   /**
    * Provides a wrapper for the SQLite3Utils::fetchAll static method.
    * 

@@ -169,7 +169,7 @@ class User implements SplSubject
     }
     elseif ($this->isInserting)
     {
-      if ($this->message['text'] === '/stop')
+      if ($this->message['text'] === '/salva')
       {
         $ok = $this->dao->finalyzeInsertions();
         if (!$ok)
@@ -216,7 +216,7 @@ class User implements SplSubject
       }
       elseif ($this->message['text'] === '/inserisci')
       {
-        $text = "Bene, ora inserisci i tuoi tiri. Quando hai finito, digita /stop per salvarli, oppure /annulla.";
+        $text = "Bene, ora inserisci i tuoi tiri. Quando hai finito, digita /salva per salvarli, oppure /annulla.";
         $this->setAndNotify($text);
         $this->handleInsertion();
         return;
@@ -427,6 +427,13 @@ class User implements SplSubject
     }
     elseif ($insertionStep == 2) // ovvero: se siamo in attesa del tiro
     {
+      if ($this->message['text'] === '/cambia_dado')
+      {
+        $this->dao->deletePendingDieType();
+        $text = "Che dado hai tirato?";
+        $this->setAndNotify($text, $replyKeyboardMarkup);
+        return;
+      }
       $dieType = $this->dao->getPendingDieType();
       if (!$dieType)
       {
@@ -436,14 +443,14 @@ class User implements SplSubject
       }
 
       $throwCandidates = [];
-      preg_match('/^\d{1,2}/', trim($this->message['text']), $throwCandidates);
+      preg_match('/^-?\d{1,2}/', trim($this->message['text']), $throwCandidates);
       if (empty($throwCandidates))
       {
         $this->setAndNotify('È un concetto bellissimo, però ora inserisci un tiro valido');
         return;
       }
-      $chosenThrow = $throwCandidates[0];
-      if ($chosenThrow !== trim($this->message['text']))
+      $chosenThrow = intval($throwCandidates[0]);
+      if ($chosenThrow != trim($this->message['text']))
       {
         $text = "Da bravo mentecatto quale sei, mi hai scritto \"{$this->message['text']}\"; assumo che il tuo tiro sia $chosenThrow";
         $this->setAndNotify($text);
@@ -461,8 +468,9 @@ class User implements SplSubject
       }
       $this->dao->insertThrow($chosenThrow);
       $this->dao->startInsertion();
+      $this->dao->insertDie($dieType);
 
-      $text = "Ok, tiro salvato!\n\nInserisci un altro tiro oppure clicca /stop.";
+      $text = "Ok, tiro salvato!\n\nInserisci un altro tiro di d$dieType oppure clicca /salva.\n\nPer cambiare dado, clicca /cambia_dado.";
       $this->setAndNotify($text, $replyKeyboardMarkup);
     }
     else

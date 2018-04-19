@@ -146,4 +146,6 @@ interface UserDao
    * @return string|bool String with die type (dXY) on success, FALSE on failure.
    */
   public function getPendingDieType();
+  
+  public function deletePendingDieType();
 }
