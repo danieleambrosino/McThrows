@@ -39,4 +39,4 @@ Per le versioni disponibili, controlla la sezione [tag](https://github.com/danie
 - **Daniele Ambrosino** <mail@danieleambrosino.it>
 
 ## Licenza
-Il progetto è distribuito sotto la licenza MIT - vedi il file [LICENSE](https://github.com/danieleambrosino/McThrowsBot/LICENSE).
+Il progetto è distribuito sotto la licenza MIT - vedi il file [LICENSE](https://github.com/danieleambrosino/McThrows/blob/master/LICENSE) distribuito con questo package.
